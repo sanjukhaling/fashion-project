@@ -1,0 +1,86 @@
+{% extends 'admintemplates/base.html' %}
+{% load static %}
+{% block mainblock %}
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="mb-0 font-size-18">Form Mask</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                                            <li class="breadcrumb-item active">Form Mask</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Example</h4>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div>
+                                                        <div class="form-group mb-4">
+                                                            <label for="input-date1">Product Name: </label>
+                                                            {{form.name}}
+                                                        </div>
+                                                        <div class="form-group mb-4">
+                                                            <label for="input-image">Product Image:</label>
+                                                            {{ form.image }}
+                                                        </div>
+                                                        <div class="form-group mb-4">
+                                                            <label for="input-datetime">Product Category: </label>
+                                                            {{form.category}}
+                                                        </div>
+                                                        <div class="form-group mb-0">
+                                                            <label for="input-currency">Product Brand: </label>
+                                                            {{form.brand}}
+                                                        </div>
+                                                        <div class="form-group mb-0">
+                                                            <label for="input-currency">Product Description: </label>
+                                                            {{form.description}}
+                                                        </div>
+                                                        <div class="form-group mb-0">
+                                                            <label for="input-currency">Product Price: </label>
+                                                            {{form.price}}
+                                                        </div>
+                                                        <div class="form-group mb-0">
+                                                            <label for="input-currency">Product Stock: </label>
+                                                            {{form.stock}}
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-info inner">Submit</button>
+
+                                                    
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+            </div>
+{% endblock %}
+               

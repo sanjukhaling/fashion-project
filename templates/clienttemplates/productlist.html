@@ -1,0 +1,26 @@
+{% extends 'clienttemplates/base.html' %}
+{% load static %}
+{% block mainblock %}
+<h2>Latest Products</h2>
+
+<div class="product-list" style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for product in products %}
+        <div class="product-item" style="flex: 0 0 30%; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
+            {% if product.image %}  
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100px; height: auto;">
+        {% endif %}
+            <h3>{{ product.name }}</h3>
+            <p><strong>Category:</strong> {{ product.category.name }}</p>
+            <p><strong>Price:</strong> ${{ product.price }}</p>
+            <p><strong>Description:</strong> {{ product.description|truncatechars:10 }}</p>
+            <p><strong>Released on:</strong> {{ product.created_at|date:"F d, Y" }}</p>  <!-- Format the date -->
+           
+            <div class="seemore_bt"><a href="{% url 'frontendapp:product_details' product.id %}">See More</a></div>
+
+        </div>
+    {% empty %}
+        <p>No products found.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

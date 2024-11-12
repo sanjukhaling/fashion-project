@@ -1,0 +1,147 @@
+{% extends "admintemplates/base.html" %}
+{% load static %}
+{% block mainblock %}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- Start Page Title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Product List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- End Page Title -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                              <a href="{% url 'backendapp:product_create' %}">Add Product</a>
+                                <table class="table table-centered table-nowrap table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" style="width: 70px;">SN</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Image:</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Stock</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Brand</th>
+
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in product_list %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td><a href="{% url 'backendapp:product_detail' i.id %}">{{ i.name }}</a></td>
+
+                                                <td>
+                                                    {% if i.image %}
+                                                        <img src="{{ i.image.url }}" class="img-fluid" alt="Image" width="70" height="70">
+                                                    {% else %}
+                                                        <span>No image available</span>
+                                                    {% endif %}
+                                                </td>                                                
+                                                <td>
+                                                    <p class="text-muted mb-0">{{ i.description|truncatechars:30 }}</p>
+                                                </td>
+                                                <td>$:{{ i.price }}</td>
+                                                <td>:{{ i.stock }}</td>
+                                                <td>{{ i.category }}</td>
+                                                <td>{{ i.brand }}</td>
+
+
+                                                <td>
+                                                    <ul class="list-inline font-size-20 contact-links mb-0">
+                                                        <!-- Delete Icon -->
+                                                        <li class="list-inline-item px-2">
+                                                            <a href="{% url 'backendapp:product_delete' i.id %}" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                                <i class="bx bx-trash"></i>
+                                                            </a>
+                                                        </li>
+                                                        <!-- Edit Icon -->
+                                                        <li class="list-inline-item px-2">
+                                                            <a href="{% url 'backendapp:product_update' i.id %}" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                <i class="bx bx-edit"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center">No categories available</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- First and Previous Page Links -->
+        {% if product_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ product_list.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        {% for n in product_list.paginator.page_range %}
+            <li class="page-item {% if product_list.number == n %}active{% endif %}">
+                <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+            </li>
+        {% endfor %}
+
+        <!-- Next and Last Page Links -->
+        {% if product_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ product_list.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ product_list.paginator.num_pages }}">Last</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- container-fluid -->
+    </div> <!-- page-content -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Skote.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design & Develop by Themesbrand
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- End Main Content -->
+
+{% endblock %}

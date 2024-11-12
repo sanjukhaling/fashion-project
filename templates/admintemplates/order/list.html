@@ -1,0 +1,138 @@
+{% extends "admintemplates/base.html" %}
+{% load static %}
+{% block mainblock %}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- Start Page Title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">order List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- End Page Title -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-centered table-nowrap table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" style="width: 70px;">SN</th>
+                                            <th scope="col">Cart: </th>
+                                            <th scope="col">Order_by: </th>
+                                            <th scope="col">Shippng Address:</th>
+                                            <th scope="col">Phone:</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Sub-total</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in order_list %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td><a href="">{{ i.cart }}</a></td>
+
+                                               
+                                                <td>$:{{ i.order_by }}</td>
+                                                <td>:{{ i.shipping_address }}</td>
+                                                <td>{{ i.phone }}</td>
+                                                <td>{{ i.email }}</td>
+                                                <td>{{ i.subtottal }}</td>
+                                                <td>{{ i.total }}</td>
+
+
+                                                <td>
+                                                    <ul class="list-inline font-size-20 contact-links mb-0">
+                                                        <!-- Delete Icon -->
+                                                        <li class="list-inline-item px-2">
+                                                            <a href="{% url 'backendapp:order_update' i.id %}" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                                <i class="bx bx-trash"></i>
+                                                            </a>
+                                                        </li>
+                                                        <!-- Edit Icon -->
+                                                        <li class="list-inline-item px-2">
+                                                            <a href="{% url 'backendapp:order_update' i.id %}" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                <i class="bx bx-edit"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center">No categories available</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- First and Previous Page Links -->
+        {% if order_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ order_list.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+
+        <!-- Page Numbers -->
+        {% for n in order_list.paginator.page_range %}
+            <li class="page-item {% if order_list.number == n %}active{% endif %}">
+                <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+            </li>
+        {% endfor %}
+
+        <!-- Next and Last Page Links -->
+        {% if order_list.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ order_list.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ order_list.paginator.num_pages }}">Last</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- container-fluid -->
+    </div> <!-- page-content -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Skote.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design & Develop by Themesbrand
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- End Main Content -->
+
+{% endblock %}

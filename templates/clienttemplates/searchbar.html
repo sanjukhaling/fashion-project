@@ -1,0 +1,57 @@
+{% extends 'clienttemplates/base.html'%}
+{% load static %}
+{% block mainblock %}
+<h2>Search Results for "{{ query }}"</h2>
+
+<div class="product-list" style="display: flex; flex-direction: column; gap: 40px;">
+    <!-- Search Results Row -->
+    <div class="search-results" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% if results %}
+            {% for product in results %}
+                <div class="product-item" style="flex: 1 1 calc(33.333% - 20px); border: 1px solid #ddd; padding: 10px; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="product-image" style="padding: 10px;">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100px; height: auto; display: block; margin-top: 10px;">
+                        {% endif %}
+                    </div>
+                    <div class="product-details" style="padding: 10px;">
+                        <h3>{{ product.name }}</h3>
+                        <p><strong>Category:</strong> {{ product.category.name }}</p>
+                        <p><strong>Price:</strong> ${{ product.price }}</p>
+                        <p><strong>Description:</strong> {{ product.description|truncatechars:10 }}</p>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No products found matching your search.</p>
+        {% endif %}
+    </div>
+
+    <!-- Related Products Row -->
+    <div class="related-products" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% if related_products %}
+            <h3 style="width: 100%; font-size: 1.5em;">Related Products</h3>
+            {% for product in related_products %}
+                <div class="product-item" style="flex: 1 1 calc(33.333% - 20px); border: 1px solid #ddd; padding: 10px; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="product-image" style="padding: 10px;">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100px; height: auto; display: block; margin-top: 10px;">
+                        {% endif %}
+                    </div>
+                    <div class="product-details" style="padding: 10px;">
+                        <h3>{{ product.name }}</h3>
+                        <p><strong>Category:</strong> {{ product.category.name }}</p>
+                        <p><strong>Price:</strong> ${{ product.price }}</p>
+                        <p><strong>Description:</strong> {{ product.description|truncatechars:10 }}</p>
+                    </div>
+                   
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No related products found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

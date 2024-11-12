@@ -1,0 +1,94 @@
+{% extends 'clienttemplates/base.html' %}
+{% load static %}
+{% block mainblock %}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- Product Details Section -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-4 text-center">{{ product.name }}</h4>
+                            <p class="text-muted text-center">
+                                Date and Time: {% now "Y-m-d H:i:s" %}
+                            </p>
+                            <div class="text-center">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-thumbnail mx-auto d-block">
+                            </div>
+                            <p class="text-muted text-center">{{ product.description }}</p>
+                            <p class="text-muted text-center"><strong>Category:</strong> {{ product.category }}</p>
+                            <p class="text-muted text-center"><strong>Brand:</strong> {{ product.brand }}</p>
+                            <p class="text-muted text-center"><strong>Price:</strong> ${{ product.price }}</p>
+
+                            <!-- Reviews List -->
+                            <div style="display: flex; gap: 20px; align-items: center; margin: 0;">
+                                <p style="margin: 0;"><i class="fas fa-thumbs-up"></i> Total Likes: {{ total_likes }}</p>
+                                <p style="margin: 0;"><i class="fas fa-comment"></i> Total Comments: {{ total_comments }}</p>
+                                <p style="margin: 0;"><i class="fas fa-share"></i> Share</p>
+                            </div>
+                            <hr>
+                            <div class="container my-4">
+                                <h5 class="font-size-15">Reviews:</h5>
+                                {% for review in reviews %}
+                                    <div class="media py-3 border-bottom">
+                                        <div class="media-body">
+                                            <div class="review-details">
+                                                <h6>{{ review.customer.email }} <small class="text-muted">{{ review.created_at }}</small></h6>
+                                                <p>{{ review.comment }}</p>
+                                            </div>
+                                            <small>Posted {{ review.timestamp|timesince }} ago</small>  <!-- Relative time -->
+                                            <div>
+                                                <!-- Reply Button: Adds 'reply' parameter to the URL with review ID -->
+                                                <a href="{% url 'frontendapp:product_details' product.id %}?reply={{ review.id }}" class="btn btn-sm btn-light">Reply</a>
+
+                                                <!-- Like Button Form: Submits a like count -->
+                                                <form action="{% url 'frontendapp:like_review' review.id %}" method="post" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-info">
+                                                        Likes: {{ review.likes }}
+                                                    </button>
+                                                </form>
+
+                                            </div>  <!-- Display Reply Form if `reply_review_id` matches current review ID -->
+                                            {% if review.id|stringformat:"s" == reply_review_id %}
+                                                <form class="reply-form mt-2" action="{% url 'frontendapp:product_details' product.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    {{ review_form.as_p }}
+                                                    <button type="submit" class="btn btn-primary btn-sm">Submit Reply</button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            {% comment %} <a href="{% url 'frontendapp:review_update' review.id %}" class="btn btn-sm btn-warning me-2"> {% endcomment %}
+                                                <i class="fas fa-edit"></i> 
+                                            </a>
+                                            <a href="{% url 'frontendapp:review_delete' review.id %}" class="btn btn-sm ">
+                                                <i class="fas fa-trash-alt"></i> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p class="text-muted">No reviews yet.</p>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Review Form -->
+                            <hr>
+                            <h5 class="font-size-16 mb-3">Leave a Review</h5>
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ review_form.as_p }}
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

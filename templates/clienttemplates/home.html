@@ -1,0 +1,157 @@
+{% extends "clienttemplates/base.html" %}
+{% load static %}
+{% block mainblock %}
+<div class="fashion_section">
+   <div id="fashion_slider" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+         {% for i in product_chunk %}
+         <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="container">
+               <h1 class="fashion_taital">Man & Woman Fashion</h1>
+               <div class="fashion_section_2">
+                  <div class="row">
+                     {% for product in i %}
+                     <div class="col-lg-4 col-sm-4">
+                        <div class="box_main">
+                           <h4 class="shirt_text"><a href="{% url 'frontendapp:product_details' product.id %}">{{ product.name }}</a></h4>
+                           <p class="price_text">Price <span style="color: #262626;">$ {{ product.price }}</span></p>
+                           <div class="tshirt_img"><img src="{{ product.image.url }}"></div>
+                           <p class="btn btn-sm btn-info">Brand: {{ product.brand }}</p>
+                           <div class="btn_main">
+                              <div class="buy_bt"><a href="{% url 'frontendapp:addtocart' product.id %}">Buy Now</a></div>
+                                 <div class="seemore_bt"><a href="{% url 'frontendapp:product_details' product.id %}">See More</a></div>
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                  </div>
+               </div>
+            </div>
+         </div>
+         {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#fashion_slider" role="button" data-slide="prev">
+         <i class="fa fa-angle-left"></i>
+      </a>
+      <a class="carousel-control-next" href="#fashion_slider" role="button" data-slide="next">
+         <i class="fa fa-angle-right"></i>
+      </a>
+   </div>
+</div>
+
+      
+      <!-- fashion section end -->
+
+      <!-- electronic section start -->
+      <div class="fashion_section">
+         <div id="electronic_main_slider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+               {% for chunk in product_chunk1 %}
+               <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <div class="container">
+                     <h1 class="fashion_taital">Beauty and Cosmetic</h1>
+                     <div class="fashion_section_2">
+                        <div class="row">
+                           {% for j in chunk %}
+                           <div class="col-lg-4 col-sm-4">
+                              <div class="box_main">
+                                 <h4 class="shirt_text"><a href="{% url 'frontendapp:product_details' j.id %}">{{j.name}}</a></h4>
+                                 <p class="price_text">Start Price  <span style="color: #262626;">$ {{j.price}}</span></p>
+                                 <div class="electronic_img"><img src="{{j.image.url}}"></div>
+                                 <div class="btn_main">
+                                    <div class="buy_bt"><a href="{% url 'frontendapp:addtocart' j.id %}">Buy Now</a></div>
+                                    <p class='btn btn-sm btn-info'>Brand:{{j.brand}}</p>
+                                    <div class="seemore_bt"><a href="{% url 'frontendapp:product_details' j.id %}">See More</a></div>
+                                 </div>
+                              </div>
+                           </div>
+                           {% endfor %}
+                          
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+
+         </div>
+      </div>
+      <!-- electronic section end -->
+
+      <!-- jewellery  section start -->
+      <div class="jewellery_section">
+         <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+               {% for pro3 in product_chunk2 %}
+               <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <div class="container">
+                     <h1 class="fashion_taital">Jewellery Accessories</h1>
+                     <div class="fashion_section_2">
+                        <div class="row">
+                           {% for i in pro3 %}
+                           <div class="col-lg-4 col-sm-4">
+                              <div class="box_main">
+                                 <h4 class="shirt_text"><a href="{% url 'frontendapp:product_details' i.id %}">{{i.name}}</a></h4>
+                                 <p class="price_text">Start Price  <span style="color: #262626;">$ {{i.price}}</span></p>
+                                 <div class="jewellery_img"><img src="{{i.image.url}}"></div>
+                                 <div class="btn_main">
+                                    <div class="buy_bt"><a href="{% url 'frontendapp:addtocart' i.id %}">Buy Now</a></div>
+                                    <p class='btn btn-sm btn-info'>Brand:{{i.brand}}</p>
+
+                                    <div class="seemore_bt"><a href="{% url 'frontendapp:product_details' i.id %}">See More</a></div>
+                                 </div>
+                              </div>
+                           </div>
+                           {% endfor %}
+                          
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+
+         </div>
+      </div>
+      <!-- jewellery  section end -->
+
+
+      <!-- foodware  section start -->
+      <div class="jewellery_section">
+         <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+               {% for pro4 in product_chunk4 %}
+               <div class="carousel-item {% if forloop.first %}  active{% endif %}">
+                  <div class="container">
+                     <h1 class="fashion_taital">FootWare Collection</h1>
+                     <div class="fashion_section_2">
+                        <div class="row">
+                           {% for b in pro4 %}
+                           <div class="col-lg-4 col-sm-4">
+                              <div class="box_main">
+                                 <h4 class="shirt_text"><a href="{% url 'frontendapp:product_details' b.id %}">{{b.name}}</a></h4>
+                                 <p class="price_text">Start Price  <span style="color: #262626;">$ {{b.price}}</span></p>
+                                 <div class="jewellery_img"><img src="{{b.image.url}}"></div>
+                                 <div class="btn_main">
+                                    <div class="buy_bt"><a href="{% url 'frontendapp:addtocart' b.id %}">Buy Now</a></div>
+                                    <p class='btn btn-sm btn-info'>Brand:{{b.brand}}</p>
+
+                                    <div class="seemore_bt"><a href="{% url 'frontendapp:product_details' b.id %}">See More</a></div>
+                                 </div>
+                              </div>
+                           </div>
+                           {% endfor %}
+                          
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+            <div class="loader_main">
+               <div class="loader"></div>
+            </div>
+         </div>
+      </div>
+      <!-- jewellery  section end -->
+{% endblock %}

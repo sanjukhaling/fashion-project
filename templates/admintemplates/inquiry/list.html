@@ -1,0 +1,98 @@
+{% extends "admintemplates/base.html" %}
+{% load static %}
+{% block mainblock %}
+
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- Start Page Title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Product List</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- End Page Title -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                              <a href="">Add Profile</a>
+                                <table class="table table-centered table-nowrap table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col" style="width: 70px;">SN</th>
+                                            <th scope="col">Name:</th>
+                                            <th scope="col">Image:</th>
+                                            <th scope="col">Message:</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in inquiry_list %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td><a href="">{{ i.name }}</a></td>                                               
+                                                <td>$:{{ i.email }}</td>
+                                                <td>:{{ i.message|truncatechars:30 }}</td>
+
+
+                                                <td>
+                                                    <ul class="list-inline font-size-20 contact-links mb-0">
+                                                        <!-- Delete Icon -->
+                                                        <li class="list-inline-item px-2">
+                                                            <a href="{% url 'backendapp:profile_delete' i.id %}" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                                <i class="bx bx-trash"></i>
+                                                            </a>
+                                                        </li>
+                                                        <!-- Edit Icon -->
+                                                        <li class="list-inline-item px-2">
+                                                            <a href="{% url 'backendapp:profile_update' i.id %}" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                <i class="bx bx-edit"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center">No categories available</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <!-- Pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- container-fluid -->
+    </div> <!-- page-content -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <script>document.write(new Date().getFullYear())</script> © Skote.
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-sm-right d-none d-sm-block">
+                        Design & Develop by Themesbrand
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- End Main Content -->
+
+{% endblock %}
